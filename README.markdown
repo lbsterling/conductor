@@ -28,6 +28,9 @@ This is a base rails application skeleton. I like [bort](http://github.com/fudge
 
   - paperclip
   - classy_forms
+  - jrails
+  - haml
+  - open\_id\_authentication
 
 ## TODO
 

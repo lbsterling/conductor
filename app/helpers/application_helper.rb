@@ -5,4 +5,12 @@ module ApplicationHelper
       capture_haml { haml_tag('div', flash[which], {:class => which.to_s}) }.strip if flash.include?(which)
     end.compact.join("\n")
   end
+
+  def hidden_if(condition)
+    'display:none' if condition
+  end
+
+  def hidden_unless(condition)
+    hidden_if(!condition)
+  end
 end
