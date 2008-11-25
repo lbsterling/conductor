@@ -6,11 +6,15 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+  # TODO: in order to validate (ie. authenticate) openid when creating user,
+  #       we need to be able to persist (possibly invalid) users and then authenticate,
+  #       then we can use the returned profile info to complete any missing data in the user
+  #       otherwise, the user information (which could include the password) would have to be
+  #       included in the return_to url... the trick is purging users that don't get completely created
   def create
     @user = User.new(params[:user])
-    if @user.save
+    if @user.save && @user.register
       flash[:notice] = "Account registered!"
-      redirect_back_or_default account_url
     else
       render :action => :new
     end

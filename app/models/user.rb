@@ -2,6 +2,16 @@ class User < ActiveRecord::Base
   has_many :user_roles
   has_many :roles, :through => :user_roles
 
+  has_states :unregistered, :registered, :active do
+    on :register do
+      transition :unregistered => :registered
+    end
+    on :activate do
+      transition :registered => :active
+      transition :unregistered => :active
+    end
+  end
+
   acts_as_authentic :login_field_validation_options => {:unless => :using_openid?}, :password_field_validation_options => {:unless => :using_openid?}
 
   validate :normalize_openid_identifier
