@@ -6,8 +6,12 @@ module ApplicationHelper
     end.compact.join("\n")
   end
 
+  def hidden
+    {:style => 'display:none;'}
+  end
+
   def hidden_if(condition)
-    'display:none' if condition
+    condition ? hidden : {}
   end
 
   def hidden_unless(condition)

@@ -42,7 +42,6 @@ class InitialMigration < ActiveRecord::Migration
       t.string :display_name, :default => "", :null => false
       t.string :email, :default => "", :null => false
 
-      t.string :login, :default => nil, :null => true
       t.string :crypted_password, :default => nil, :null => true
       t.string :password_salt, :default => nil, :null => true
 
@@ -58,10 +57,9 @@ class InitialMigration < ActiveRecord::Migration
       t.timestamps
     end
 
-    admin_user = User.create! :email => APP_CONFIG[:admin_email], :login => 'admin', :password => APP_CONFIG[:admin_password], :password_confirmation => APP_CONFIG[:admin_password]
+    admin_user = User.create! :email => APP_CONFIG[:admin_email], :password => APP_CONFIG[:admin_password], :password_confirmation => APP_CONFIG[:admin_password]
     admin_user.roles << admin_role
 
-    add_index :users, :login
     add_index :users, :openid_identifier
     add_index :users, :remember_token
     add_index :users, :last_request_at

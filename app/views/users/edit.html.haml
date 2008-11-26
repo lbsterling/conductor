@@ -1,8 +1,10 @@
 %h2 Edit My Account
 
-- form_for @user, :url => account_path do |f|
+- form_for @user, :url => user_path do |f|
   = f.error_messages
+  = f.text_field :display_name
   = render :partial => "form", :object => f
   = f.submit "Update"
 
-= link_to "My profile", account_path
+%ul#hints
+  = render :partial => "hints"

@@ -1,6 +1,6 @@
-= form.text_field :login, :label => 'Username'
-= form.password_field :password, :label => form.object.new_record? ? nil : "Change password"
-= form.password_field :password_confirmation
-= form.text_field :openid_identifier, :label => "Or use OpenID instead of a standard login / password"
-= form.text_field :display_name
 = form.text_field :email
+.login_alternative
+  = form.password_field :password
+  = form.password_field :password_confirmation
+.login_alternative{hidden}
+  = form.text_field :openid_identifier, :label => image_tag('openid.png', :alt => 'OpenID')

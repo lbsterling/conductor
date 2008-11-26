@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  acts_as_authentic :login_field_validation_options => {:unless => :using_openid?}, :password_field_validation_options => {:unless => :using_openid?}
+  acts_as_authentic :password_field_validation_options => {:unless => :using_openid?}
 
   validate :normalize_openid_identifier
   validates_uniqueness_of :openid_identifier, :allow_blank => true
