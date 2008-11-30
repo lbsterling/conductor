@@ -1,3 +1,11 @@
+module ActiveSupport
+  class OrderedHash < Array
+    def each_key(&block)
+      keys.each &block
+    end
+  end
+end
+
 class ClassyFormBuilder < ActionView::Helpers::FormBuilder
   def check_box(method, options = {}, checked_value = "1", unchecked_value = "0")
     div_options = classy_options(options, 'checkbox')
@@ -60,12 +68,30 @@ class ClassyFormBuilder < ActionView::Helpers::FormBuilder
     classy_content(method, super, div_options)
   end
 
+  def error_messages(options = {})
+    options.symbolize_keys!
+    if fields = Array(options.delete(:fields))
+      # object = instance_variable_get "@#{@object_name}"
+      errors = object.errors.instance_variable_get "@errors"
+      ordered_errors = ActiveSupport::OrderedHash.new
+      fields.each do |name|
+        name = name.to_s
+        ordered_errors[name] = errors.delete(name) if errors.include?(name)
+      end
+      errors.each do |attr,messages|
+        ordered_errors[attr] = messages
+      end
+      object.errors.instance_variable_set "@errors", ordered_errors
+    end
+    super
+  end
+
 protected
   def classy_options(options, div_class)
     classes = div_class.split(' ')
     classes << 'input'
     classes << 'disabled' if options[:disabled]
-    [:label].inject({:class => classes.join(' ')}) do |h,o|
+    [:label,:required].inject({:class => classes.join(' ')}) do |h,o|
       h[o] = options.delete(o) if options.include?(o)
       h
     end
@@ -73,10 +99,14 @@ protected
   
   def classy_content(method, content, options)
     label = options.delete(:label)
+    required = options.delete(:required)
     div_class = options[:class].split(' ')
     if label != false
+      label ||= method.to_s.humanize
+      required = '* required' if required == true
+      label += " #{@template.content_tag 'span', required, :class => 'required'}" if required
       if div_class.include?('checkbox') || div_class.include?('radio')
-        content = content + label(method, label)
+        content += label(method, label)
       else
         content = label(method, label) + content
       end

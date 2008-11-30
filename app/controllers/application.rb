@@ -2,11 +2,30 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
+  include RequireRole
+
   helper :all
   helper_method :current_user_session, :current_user
+  helper_method :nav, :current_nav
   filter_parameter_logging :password, :password_confirmation
 
+  class << self
+    def require_user(options = {})
+      before_filter :require_user, options
+    end
+
+    def require_no_user(options = {})
+      before_filter :require_no_user, options
+    end
+  end
+
 private
+  def nav
+  end
+
+  def current_nav
+  end
+
   def current_user_session
     return @current_user_session if defined?(@current_user_session)
     @current_user_session = UserSession.find
@@ -19,7 +38,6 @@ private
 
   def require_user
     unless current_user
-      store_location
       flash[:notice] = "You must be logged in to access this page"
       redirect_to new_session_url
       return false
@@ -28,7 +46,6 @@ private
 
   def require_no_user
     if current_user
-      store_location
       flash[:notice] = "You must be logged out to access this page"
       redirect_to account_url
       return false

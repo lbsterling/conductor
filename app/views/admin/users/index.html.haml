@@ -1,0 +1,10 @@
+%h2== There are #{pluralize(@users.total_entries, 'user')}
+
+%table
+  %tr<
+    %th> Display name
+    %th> Email
+    %th> Domain name
+  = render :partial => @users
+
+= will_paginate @users

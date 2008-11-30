@@ -1,16 +1,18 @@
 %h2 Log in now
+= flash_messages
 
 - form_for @user_session, :url => session_path do |f|
-  = f.error_messages
-  .login_alternative{hidden_unless(@user_session.openid_identifier.blank?)}
+  = hidden_field_tag :use_openid, @use_openid ? 1 : 0
+  .login_alternative{hidden_if(@use_openid)}
     = f.text_field :email
     = f.password_field :password
-  .login_alternative{hidden_if(@user_session.openid_identifier.blank?)}
+  .login_alternative{hidden_unless(@use_openid)}
     = f.text_field :openid_identifier, :label => image_tag('openid.png', :alt => 'OpenID')
   = f.check_box :remember_me, :label => 'remember me'
   = f.submit "Log in"
+
 %ul#hints
-  %li.login_alternative{hidden_unless(@user_session.openid_identifier.blank?)}= link_to_function 'Log in using OpenID instead', "$('.login_alternative').toggle();"
-  %li.login_alternative{hidden_unless(@user_session.openid_identifier.blank?)}= link_to 'Forgot your password?', new_password_path
-  %li.login_alternative{hidden_if(@user_session.openid_identifier.blank?)}= link_to_function "Log in using a standard username/password", "$('.login_alternative').toggle();"
+  %li.login_alternative{hidden_if(@use_openid)}= link_to_function 'Log in using OpenID instead', "$('#use_openid').val(1);$('.login_alternative').toggle();"
+  %li.login_alternative{hidden_if(@use_openid)}= link_to 'Forgot your password?', new_password_path
+  %li.login_alternative{hidden_unless(@use_openid)}= link_to_function "Log in using a standard username/password", "$('#use_openid').val(0);$('.login_alternative').toggle();"
   %li= link_to('Sign up for an account now', new_user_path)

@@ -1,8 +1,8 @@
 require 'test_helper'
 
-class PasswordsControllerTest < ActionController::TestCase
+class PagesControllerTest < ActionController::TestCase
   # Replace this with your real tests.
-  test "should succeed" do
+  test "the truth" do
     assert true
   end
 end

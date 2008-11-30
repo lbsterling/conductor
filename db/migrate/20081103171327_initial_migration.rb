@@ -39,7 +39,6 @@ class InitialMigration < ActiveRecord::Migration
 
     create_table :users do |t|
       t.string :state, :default => "unregistered", :null => false
-      t.string :display_name, :default => "", :null => false
       t.string :email, :default => "", :null => false
 
       t.string :crypted_password, :default => nil, :null => true
@@ -56,8 +55,14 @@ class InitialMigration < ActiveRecord::Migration
 
       t.timestamps
     end
-
-    admin_user = User.create! :email => APP_CONFIG[:admin_email], :password => APP_CONFIG[:admin_password], :password_confirmation => APP_CONFIG[:admin_password]
+    
+    # make sure the column information is up to date and that authlogic has the current state
+    User.reset_column_information
+    User.act_as_authentic
+    
+    admin_user = User.create :display_name => 'Administrator', :email => APP_CONFIG[:admin_email], :password => APP_CONFIG[:admin_password], :password_confirmation => APP_CONFIG[:admin_password]
+    
+    admin_user.update_attribute :state, 'active'
     admin_user.roles << admin_role
 
     add_index :users, :openid_identifier

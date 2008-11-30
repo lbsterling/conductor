@@ -1,8 +1,6 @@
 require 'test_helper'
 
 class RoleTest < ActiveSupport::TestCase
-  # Replace this with your real tests.
-  def test_truth
-    assert true
-  end
+  should_have_many :user_roles
+  should_have_many :users, :through => :user_roles
 end

@@ -1,16 +1,12 @@
 %h2 Your account
 
 %div
-  %b Login:
-  =h @user.login
-
-%div
-  %b Display name:
-  =h @user.display_name
-
-%div
   %b Email:
   =h @user.email
+
+%div
+  %b OpenID:
+  =h @user.openid_identifier
 
 %div
   %b Login count:
@@ -28,4 +24,4 @@
   %b Current login at:
   =h @user.current_login_at
 
-= link_to 'Edit', edit_account_path
+= link_to 'Edit your profile', edit_account_path

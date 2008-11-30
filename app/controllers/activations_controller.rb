@@ -1,12 +1,14 @@
 class ActivationsController < ApplicationController
   before_filter :load_user_using_perishable_token, :only => :show
-  before_filter :require_no_user
+  # require_no_user
 
   def show
     if @user.activate
       @user.send :create_session!
-      redirect_to account_url
+    else
+      flash[:error] = @user.errors.full_messages.to_sentence
     end
+    redirect_to root_url
   end
 
 private

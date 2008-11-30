@@ -1,9 +1,11 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
 one:
-  role: 
-  user: 
+  role: one
+  user: one
 
 two:
-  role: 
-  user: 
+  role: one
+  user: two
+
+two:
+  role: two
+  user: two

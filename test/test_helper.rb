@@ -35,4 +35,24 @@ class Test::Unit::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+  def login_as(who)
+    @request.session['user_credentials'] = users(who).remember_token
+  end
+
+  def assert_has_many(model_class, association, options = {})
+    reflection = model_class.reflections[association]
+    if through = options[:through]
+      assert_instance_of ActiveRecord::Reflection::ThroughReflection, reflection
+      assert_equal through, reflection.options[:through]
+    else
+      assert_instance_of ActiveRecord::Reflection::AssociationReflection, reflection
+    end
+    assert_equal :has_many, reflection.macro
+  end
+
+  def assert_belongs_to(model_class, association)
+    reflection = model_class.reflections[association]
+    assert_instance_of ActiveRecord::Reflection::AssociationReflection, reflection
+    assert_equal :belongs_to, reflection.macro
+  end
 end

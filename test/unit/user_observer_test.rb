@@ -1,8 +1,7 @@
 require 'test_helper'
 
 class UserObserverTest < Test::Unit::TestCase
-  # Replace this with your real tests.
-  def test_truth
+  should "test truth" do
     assert true
   end
 end

@@ -1,8 +1,7 @@
 %h2 Edit My Account
 
-- form_for @user, :url => user_path do |f|
-  = f.error_messages
-  = f.text_field :display_name
+- form_for @user, :url => account_path do |f|
+  = f.error_messages :fields => [:email,:password,:password_confirmation,:openid_identifier], :header_message => "Unable to edit user due to #{pluralize(@user.errors.size, 'error')}:", :message => nil
   = render :partial => "form", :object => f
   = f.submit "Update"
 
