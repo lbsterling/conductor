@@ -1,0 +1,3 @@
+[submodule "vendor/plugins/classy_forms"]
+	path = vendor/plugins/classy_forms
+	url = git://github.com/sbfaulkner/classy_forms.git
