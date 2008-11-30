@@ -1,3 +1,6 @@
 [submodule "vendor/plugins/classy_forms"]
 	path = vendor/plugins/classy_forms
 	url = git://github.com/sbfaulkner/classy_forms.git
+[submodule "vendor/plugins/has_states"]
+	path = vendor/plugins/has_states
+	url = git://github.com/sbfaulkner/has_states.git
