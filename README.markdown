@@ -51,4 +51,4 @@ This is a base rails application skeleton. I like [bort](http://github.com/fudge
 ## Legal
 
 **Author:** S. Brent Faulkner <brentf@unwwwired.net>  
-**License:** Copyright &copy; 2008 unwwwired.net, released under the MIT license
+**License:** Copyright &copy; 2008-2009 unwwwired.net, released under the MIT license
