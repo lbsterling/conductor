@@ -38,6 +38,7 @@ class InitialMigration < ActiveRecord::Migration
     add_index :user_roles, :role_id
 
     create_table :users do |t|
+      t.string :display_name, :null => false
       t.string :state, :default => "unregistered", :null => false
       t.string :email, :default => "", :null => false
 
