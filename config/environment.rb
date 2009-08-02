@@ -26,7 +26,7 @@ Rails::Initializer.run do |config|
   # config.gem "bj"
   # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
   # config.gem "aws-s3", :lib => "aws/s3"
-  config.gem 'authlogic', :version => '>= 1.3.4'
+  config.gem 'authlogic', :version => '= 1.3.4'
   config.gem 'ruby-openid', :version => '>= 2.1.2', :lib => 'openid'
   config.gem 'mislav-will_paginate', :version => '>= 2.2.3', :lib => 'will_paginate', :source => 'http://gems.github.com'
   config.gem 'haml', :version => '>= 2.0.4'
